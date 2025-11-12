@@ -1,7 +1,7 @@
 from app.utils.vector_store import get_vector_store
 
 
-def search(query: str, k: int = 3) -> str:
+def search(query: str, k: int = 5) -> str:
     """Search documents and return relevant context.
     
     Args:
