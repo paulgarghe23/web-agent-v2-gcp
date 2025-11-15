@@ -98,33 +98,33 @@ steps:
   #       echo "HTTP link: https://console.cloud.google.com/storage/browser/${_BUCKET_NAME_LOAD_TEST_RESULTS}/results-$${_TIMESTAMP}"
   #       echo "_________________________________________________________________________"
 
-  # Trigger Prod Deployment
-  - name: gcr.io/cloud-builders/gcloud
-    id: trigger-prod-deployment
-    entrypoint: gcloud
-    args:
-      - "beta"
-      - "builds"
-      - "triggers"
-      - "run"
-      - "deploy-web-agent"
-      - "--region"
-      - "$LOCATION"
-      - "--project"
-      - "$PROJECT_ID"
-      - "--sha"
-      - $COMMIT_SHA
+  # Trigger Prod Deployment - Disabled (trigger doesn't exist yet)
+  # - name: gcr.io/cloud-builders/gcloud
+  #   id: trigger-prod-deployment
+  #   entrypoint: gcloud
+  #   args:
+  #     - "beta"
+  #     - "builds"
+  #     - "triggers"
+  #     - "run"
+  #     - "deploy-web-agent"
+  #     - "--region"
+  #     - "$LOCATION"
+  #     - "--project"
+  #     - "$PROJECT_ID"
+  #     - "--sha"
+  #     - $COMMIT_SHA
 
-  - name: gcr.io/cloud-builders/gcloud
-    id: echo-view-build-trigger-link
-    entrypoint: /bin/bash
-    args:
-      - "-c"
-      - |
-        echo "_________________________________________________________________________"
-        echo "Production deployment triggered. View progress and / or approve on the Cloud Build Console:"
-        echo "https://console.cloud.google.com/cloud-build/builds;region=$LOCATION"
-        echo "_________________________________________________________________________"
+  # - name: gcr.io/cloud-builders/gcloud
+  #   id: echo-view-build-trigger-link
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       echo "_________________________________________________________________________"
+  #       echo "Production deployment triggered. View progress and / or approve on the Cloud Build Console:"
+  #       echo "https://console.cloud.google.com/cloud-build/builds;region=$LOCATION"
+  #       echo "_________________________________________________________________________"
 
 substitutions:
   _STAGING_PROJECT_ID: web-agent-gcp-project
