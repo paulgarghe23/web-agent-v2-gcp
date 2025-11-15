@@ -21,6 +21,10 @@ def search(query: str, k: int = 3, max_distance: float = 0.7) -> str:
         if score <= max_distance
     ]
     
+    # If no results pass threshold, return at least the best one
+    if not filtered and results_with_scores:
+        filtered = [results_with_scores[0][0]]  # Best result (lowest distance)
+    
     if not filtered:
         return ""
     
