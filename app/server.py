@@ -23,7 +23,7 @@ from google.cloud import logging as google_cloud_logging
 from langchain_core.runnables import RunnableConfig
 from traceloop.sdk import Instruments, Traceloop
 
-from app.agent import agent
+from app.agent import answer_question
 from app.utils.tracing import CloudTraceLoggingSpanExporter
 from app.utils.typing import Feedback, InputChat, Request, dumps, ensure_valid_config
 
@@ -99,10 +99,26 @@ def stream_messages(
     try:
         config = ensure_valid_config(config=config)
         set_tracing_properties(config)
-        input_dict = input.model_dump()
-
-        for data in agent.stream(input_dict, config=config, stream_mode="messages"):
-            yield dumps(data) + "\n"
+        
+        # Get last user message
+        messages = input.messages
+        last_message = messages[-1] if messages else None
+        if not last_message or last_message.type != "human":
+            error_message = {"type": "error", "content": "No valid question found"}
+            yield dumps(error_message) + "\n"
+            return
+        
+        question = last_message.content
+        
+        # Direct call - get answer
+        answer = answer_question(question)
+        
+        # Stream answer as chunks (simulate streaming for compatibility)
+        chunk_size = 10
+        for i in range(0, len(answer), chunk_size):
+            chunk = answer[i:i + chunk_size]
+            yield dumps({"type": "AIMessageChunk", "content": chunk}) + "\n"
+            
     except Exception as e:
         logger.error(f"Error in stream_messages: {str(e)}", exc_info=True)
         error_message = {"type": "error", "content": f"Error: {str(e)}"}
