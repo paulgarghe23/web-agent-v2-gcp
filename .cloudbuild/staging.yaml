@@ -130,7 +130,6 @@ substitutions:
   _STAGING_PROJECT_ID: YOUR_STAGING_PROJECT_ID
   _REGION: europe-southwest1
 
-logsBucket: gs://${PROJECT_ID}-web-agent-logs/build-logs
 options:
   substitutionOption: ALLOW_LOOSE
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
