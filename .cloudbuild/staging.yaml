@@ -129,7 +129,7 @@ steps:
 substitutions:
   _STAGING_PROJECT_ID: web-agent-gcp-project
   _REGION: europe-west1
-  _ARTIFACT_REGISTRY_REPO_NAME: web-agent-repo
+  _ARTIFACT_REGISTRY_REPO_NAME: cloud-run-source-deploy
   _CONTAINER_NAME: web-agent
 
 options:
