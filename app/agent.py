@@ -13,15 +13,14 @@
 # limitations under the License.
 
 # mypy: disable-error-code="union-attr"
-from langchain_google_vertexai import ChatVertexAI
+from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
 from app.utils.rag import search
 
-LOCATION = "global"
-LLM = "gemini-2.5-pro"
+LLM = "gpt-4o-mini"
 
-llm = ChatVertexAI(model=LLM, location=LOCATION, temperature=0.4)
+llm = ChatOpenAI(model=LLM, temperature=0.2)
 
 
 def get_paul_info(query: str) -> str:
@@ -38,10 +37,10 @@ agent = create_react_agent(
     "Answer using the provided context about Paul. "
     
     "CRITICAL RULES - FOLLOW STRICTLY:"
-    "1. NEVER copy-paste text from context. NEVER quote large sections. NEVER show Q&A examples, snippets, or 'Ready-Made Snippets' sections."
-    "2. ALWAYS synthesize information into your own words. Answer like a human assistant, not a document copier."
+    "1. NEVER copy-paste text from context. NEVER quote large sections. NEVER show markdown headers like '## Values & Philosophy', '## Current Focus', etc. NEVER copy entire sections verbatim."
+    "2. ALWAYS synthesize information into your own words. Answer like a human assistant, not a document copier. Extract the MEANING, not the exact text."
     "3. Keep answers SHORT (2-4 sentences max unless specifically asked for details)."
-    "4. If you see 'Q:' and 'A:' patterns in context, IGNORE the format. They are examples, not answers to copy."
+    "4. If you see 'Q:' and 'A:' patterns or markdown headers (##) in context, IGNORE the format completely. They are structure, not content to copy."
     "5. If the user asks something specific and the answer is not in the context, say 'I don't have that information in my knowledge base yet and don't know it.' Do not make it up."
     "6. If the user asks something generic and easy to answer and you know the answer, then you can answer it."
     "7. If the user asks who are you or what model are you, you can say you are a Large Language Model trained by either OpenAI, Google or Anthropic. Do not clarify which company trained you."
