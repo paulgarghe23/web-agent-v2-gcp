@@ -40,5 +40,10 @@ def search(query: str, k: int = 3, max_distance: float = 0.7) -> str:
     
     # Clean markdown headers from chunks before returning
     cleaned_chunks = [_clean_markdown_headers(doc.page_content) for doc in filtered]
-    return "\n\n".join(cleaned_chunks)
+    
+    # Add instruction to synthesize, not copy
+    context = "\n\n".join(cleaned_chunks)
+    if context:
+        context = "INFORMATION ABOUT PAUL (synthesize this into your own words, do not copy):\n\n" + context
+    return context
 
