@@ -20,11 +20,15 @@ from app.utils.rag import search
 
 LLM = "gpt-4o-mini"
 
-llm = ChatOpenAI(model=LLM, temperature=0.6, max_tokens=400)
+llm = ChatOpenAI(model=LLM, temperature=0.6, max_tokens=300)
 
 
 def get_paul_info(query: str) -> str:
-    """Search for information about Paul in documents."""
+    """Search for information about Paul in documents. 
+    
+    Returns context that you must SYNTHESIZE into your own words. 
+    Do NOT copy the returned text verbatim. Think about what it means and explain it naturally.
+    """
     return search(query)
 
 
@@ -36,6 +40,7 @@ agent = create_react_agent(
     
     "IMPORTANT: When you receive context from the tool, THINK about what it means, then explain it in your own words. "
     "Never copy text verbatim. Never quote large sections. Synthesize the information and explain it like you're telling a friend. "
+    "If the answer is not in the context you receive, say you don't know."
     
     "Keep answers brief (2-4 sentences). If you don't know something, say so. "
     "Always reply in the same language the user asks."

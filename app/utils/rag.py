@@ -41,9 +41,11 @@ def search(query: str, k: int = 3, max_distance: float = 0.7) -> str:
     # Clean markdown headers from chunks before returning
     cleaned_chunks = [_clean_markdown_headers(doc.page_content) for doc in filtered]
     
-    # Add instruction to synthesize, not copy
+    # Format context clearly - similar to project that worked
     context = "\n\n".join(cleaned_chunks)
     if context:
-        context = "INFORMATION ABOUT PAUL (synthesize this into your own words, do not copy):\n\n" + context
+        # Format like the working project: CONTEXT:\n{context}
+        # This makes it clear it's reference material to synthesize, not text to copy
+        context = f"CONTEXT:\n{context}\n\nUse this information to answer, but synthesize it into your own words. Do not copy text verbatim."
     return context
 
