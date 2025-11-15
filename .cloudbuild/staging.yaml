@@ -46,15 +46,15 @@ steps:
       - "--project"
       - "${_STAGING_PROJECT_ID}"
 
-  # Fetch Staging Service URL
-  - name: "gcr.io/cloud-builders/gcloud"
-    id: fetch-staging-url
-    entrypoint: /bin/bash
-    args:
-      - "-c"
-      - |
-        echo $(gcloud run services describe web-agent-west1 \
-        --region ${_REGION} --project ${_STAGING_PROJECT_ID} --format="value(status.url)") > staging_url.txt
+  # Fetch Staging Service URL - Disabled (only needed for load tests)
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   id: fetch-staging-url
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       echo $(gcloud run services describe web-agent-west1 \
+  #       --region ${_REGION} --project ${_STAGING_PROJECT_ID} --format="value(status.url)") > staging_url.txt
 
   # Fetch ID Token - Temporarily disabled
   # - name: gcr.io/cloud-builders/gcloud
